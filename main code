@@ -1,0 +1,50 @@
+import java.util.Scanner;
+
+public class Main
+{
+    public static void add_product(Product[] Products, int array_place, int id, String name, int price, int quanity)
+    {
+        Products[array_place] = new Product(id, name, price, quanity);
+    }
+    public static display_products(Object [] Products)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            System.out.println("Product id: "+product[i].getId());
+            System.out.println("Product name: "+product[i].getName());
+            System.out.println("Product price: "+product[i].getPrice());
+            System.out.println("Product quantity: "+product[i].getQuantityInStock());
+        }
+    }
+    public static void calculate_value(Product[] products)
+    {
+        int total_price;
+        int total_quantity;
+        
+        for (int i = 0; i < 5; i++)
+        {
+            
+        }
+    }
+	public static void main(String[] args) {
+		Product [] Products = new Product[5];
+		
+		Scanner sc = new Scanner(System.in);
+		
+		for (int i = 0; i < 5; i++)
+		{
+		    System.out.println("enter the prduct's id: ");
+		    int entered_id = sc.nextInt();
+		    sc.nextLine();
+		    System.out.println("enter the prduct's name: ");
+		    String entered_name = sc.nextLine();
+		    System.out.println("enter the prduct's price: ");
+		    int entered_price = sc.nextInt();
+		    System.out.println("enter the prduct's quantity: ");
+		    int entered_quantity = sc.nextInt();
+		    add_product(Products, i, entered_id, entered_name, entered_price, entered_quantity);
+		}
+		
+		display_products(Products);
+	}
+}
