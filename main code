@@ -3,7 +3,8 @@ import java.util.ArrayList;
 
 public class Main {
     public static void addProduct(ArrayList<Product> Products, int id, String name, int price, int quantity) {
-        Products.add(new Product(id, name, price, quantity));
+        Product new_product_to_add = new Product(id, name, price, quantity);
+        Products.add(new_product_to_add);
     }
 
     public static void display_products(ArrayList<Product> Products) {
