@@ -1,50 +1,70 @@
 import java.util.Scanner;
+import java.util.ArrayList;
 
-public class Main
-{
-    public static void add_product(Product[] Products, int array_place, int id, String name, int price, int quanity)
-    {
-        Products[array_place] = new Product(id, name, price, quanity);
+public class Main {
+    public static void addProduct(ArrayList<Product> Products, int id, String name, int price, int quantity) {
+        Products.add(new Product(id, name, price, quantity));
     }
-    public static display_products(Object [] Products)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            System.out.println("Product id: "+product[i].getId());
-            System.out.println("Product name: "+product[i].getName());
-            System.out.println("Product price: "+product[i].getPrice());
-            System.out.println("Product quantity: "+product[i].getQuantityInStock());
+
+    public static void display_products(ArrayList<Product> Products) {
+        for (int i = 0; i < Products.size(); i++) {
+            System.out.println("Product id: " + Products.get(i).getId());
+            System.out.println("Product name: " + Products.get(i).getName());
+            System.out.println("Product price: " + Products.get(i).getPrice());
+            System.out.println("Product quantity: " + Products.get(i).getQuantityInStock());
         }
     }
-    public static void calculate_value(Product[] products)
-    {
-        int total_price;
-        int total_quantity;
-        
-        for (int i = 0; i < 5; i++)
+
+    public static void calculate_value(ArrayList<Product> Products) {
+        int total_value = 0;
+        int total_quantity = 0;
+
+        for (int i = 0; i < Products.size(); i++) {
+            total_value += Products.get(i).getPrice() * Products.get(i).getQuantityInStock();
+            total_quantity += Products.get(i).getQuantityInStock();
+        }
+
+        System.out.println("The total value of the store is: " + total_value);
+        System.out.println("The total quantity of the store is: " + total_quantity);
+    }
+
+    public static void main(String[] args) {
+        ArrayList<Product> Products = new ArrayList<>();
+        Scanner sc = new Scanner(System.in);
+
+        while (true)
         {
-            
+            System.out.println("what would you like to do? \n add product \n display products \n calculate value \n exit ");
+            String answer = sc.nextLine();
+            if (answer=="add product")
+            {
+                System.out.println("Enter the product's id: ");
+                int enteredId = sc.nextInt();
+                sc.nextLine();
+                System.out.println("Enter the product's name: ");
+                String enteredName = sc.nextLine();
+                System.out.println("Enter the product's price: ");
+                int enteredPrice = sc.nextInt();
+                System.out.println("Enter the product's quantity: ");
+                int enteredQuantity = sc.nextInt();
+                addProduct(Products, enteredId, enteredName, enteredPrice, enteredQuantity);
+            }
+            else if (answer.equals("display products"))
+            {
+                display_products(Products);
+            }
+            else if (answer.equals("calculate value"))
+            {
+                calculate_value(Products);
+            }
+            else if (answer.equals("exit"))
+            {
+                break;
+            }
+            else
+            {
+                System.out.println("error");
+            }
         }
     }
-	public static void main(String[] args) {
-		Product [] Products = new Product[5];
-		
-		Scanner sc = new Scanner(System.in);
-		
-		for (int i = 0; i < 5; i++)
-		{
-		    System.out.println("enter the prduct's id: ");
-		    int entered_id = sc.nextInt();
-		    sc.nextLine();
-		    System.out.println("enter the prduct's name: ");
-		    String entered_name = sc.nextLine();
-		    System.out.println("enter the prduct's price: ");
-		    int entered_price = sc.nextInt();
-		    System.out.println("enter the prduct's quantity: ");
-		    int entered_quantity = sc.nextInt();
-		    add_product(Products, i, entered_id, entered_name, entered_price, entered_quantity);
-		}
-		
-		display_products(Products);
-	}
 }
