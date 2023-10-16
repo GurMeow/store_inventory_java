@@ -1,71 +1,111 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 
-public class Main {
-    public static void addProduct(ArrayList<Product> Products, int id, String name, int price, int quantity) {
-        Product new_product_to_add = new Product(id, name, price, quantity);
-        Products.add(new_product_to_add);
-    }
-
-    public static void display_products(ArrayList<Product> Products) {
-        for (int i = 0; i < Products.size(); i++) {
-            System.out.println("Product id: " + Products.get(i).getId());
-            System.out.println("Product name: " + Products.get(i).getName());
-            System.out.println("Product price: " + Products.get(i).getPrice());
-            System.out.println("Product quantity: " + Products.get(i).getQuantityInStock());
-        }
-    }
-
-    public static void calculate_value(ArrayList<Product> Products) {
-        int total_value = 0;
-        int total_quantity = 0;
-
-        for (int i = 0; i < Products.size(); i++) {
-            total_value += Products.get(i).getPrice() * Products.get(i).getQuantityInStock();
-            total_quantity += Products.get(i).getQuantityInStock();
-        }
-
-        System.out.println("The total value of the store is: " + total_value);
-        System.out.println("The total quantity of the store is: " + total_quantity);
-    }
-
-    public static void main(String[] args) {
-        ArrayList<Product> Products = new ArrayList<>();
+public class Main
+{
+    public static void addProduct(ArrayList<Product> Products)
+    {
         Scanner sc = new Scanner(System.in);
-
-        while (true)
+        
+        System.out.println("Enter the product's id: ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter the product's name: ");
+        String name = sc.nextLine();
+        System.out.println("Enter the product's price: ");
+        int price = sc.nextInt();
+        System.out.println("Enter the product's quantity in stock: ");
+        int quantity = sc.nextInt();
+        Product new_product = new Product(id, name, price, quantity);
+        Products.add(new_product);
+    }
+    
+    public static void showStock(ArrayList<Product> Products)
+    {
+        if (Products.size() > 0)
         {
-            System.out.println("what would you like to do? \n add product \n display products \n calculate value \n exit ");
-            String answer = sc.nextLine();
-            if (answer=="add product")
+            for (int i = 0; i < Products.size(); i++)
             {
-                System.out.println("Enter the product's id: ");
-                int enteredId = sc.nextInt();
-                sc.nextLine();
-                System.out.println("Enter the product's name: ");
-                String enteredName = sc.nextLine();
-                System.out.println("Enter the product's price: ");
-                int enteredPrice = sc.nextInt();
-                System.out.println("Enter the product's quantity: ");
-                int enteredQuantity = sc.nextInt();
-                addProduct(Products, enteredId, enteredName, enteredPrice, enteredQuantity);
+                System.out.print("\nProduct "+(i+1)+" id: "+Products.get(i).getId());
+                System.out.print(", name: "+Products.get(i).getName());
+                System.out.print(", price: "+Products.get(i).getPrice());
+                System.out.println(", quantity in stock: "+Products.get(i).getQuantityInStock()+"\n");
             }
-            else if (answer.equals("display products"))
+        }
+        else
+        {
+            System.out.println("\nThe current stock of the shop is empty\n");
+        }
+    }
+    
+    public static void updateStock(ArrayList<Product> Products)
+    {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter the product's id that you'd like to update: ");
+        int id = sc.nextInt();
+        
+        System.out.println("Enter the new quantity amount: ");
+        int newQuantity = sc.nextInt();
+        
+        for (int i = 0; i < Products.size(); i++)
+        {
+            if (id==Products.get(i).getId())
             {
-                display_products(Products);
-            }
-            else if (answer.equals("calculate value"))
-            {
-                calculate_value(Products);
-            }
-            else if (answer.equals("exit"))
-            {
+                Products.get(i).updateQuantity(newQuantity);
+                System.out.println("\nUpdated product "+(i+1)+" quantity\n");
                 break;
             }
-            else
-            {
-                System.out.println("error");
-            }
         }
     }
+    
+    public static void calculateValue(ArrayList<Product> Products)
+    {
+        int totalValue = 0;
+        
+        for (int i = 0; i < Products.size(); i++)
+        {
+            totalValue+=Products.get(i).getPrice() * Products.get(i).getQuantityInStock();
+        }
+        
+        System.out.println("\nThe total value of items in stock is "+totalValue+"\n");
+    }
+    
+	public static void main(String[] args) {
+	    Scanner sc = new Scanner(System.in);
+		ArrayList<Product> Products = new ArrayList<>();
+		
+		while (true)
+		{
+		    System.out.println("Choose a command:\nadd product\nshow stock\nupdate stock\ncalculate total value\n exit\n!write the command as written!\n");
+		    String answer = sc.nextLine();
+		    
+		    if (answer.equals("add product"))
+		    {
+		        addProduct(Products);
+		    }
+		    else if (answer.equals("show stock"))
+		    {
+		        showStock(Products);
+		    }
+		    else if (answer.equals("update stock"))
+		    {
+		        updateStock(Products);
+		    }
+		    else if (answer.equals("calculate total value"))
+		    {
+		        calculateValue(Products);
+		    }
+		    else if (answer.equals("exit"))
+		    {
+		        System.out.println("Program will be closed shortly");
+		        break;
+		    }
+		    else
+		    {
+		        System.out.println("Error, command invalid.");
+		    }
+		}
+		System.out.println("Thank you for using my program, good day.");
+	}
 }
